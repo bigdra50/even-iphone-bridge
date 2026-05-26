@@ -41,13 +41,25 @@ jobs:
       - name: Generate Xcode project
         run: xcodegen generate
 
+      # シミュレータ名はランナーイメージ更新で変わるため UDID を動的取得する
+      - name: Select an iOS Simulator
+        id: sim
+        run: |
+          UDID=$(xcrun simctl list devices available --json \
+            | jq -r 'first(.devices[][] | select(.name | startswith("iPhone")) | .udid)')
+          if [ -z "$UDID" ] || [ "$UDID" = "null" ]; then
+            echo "::error::No iPhone simulator available"; xcrun simctl list devices; exit 1
+          fi
+          echo "Using simulator $UDID"
+          echo "udid=$UDID" >> "$GITHUB_OUTPUT"
+
       - name: Build & Test (no code signing)
         run: |
           set -o pipefail
           xcodebuild test \
             -project EvenG2Bridge.xcodeproj \
             -scheme EvenG2Bridge \
-            -destination 'platform=iOS Simulator,name=iPhone 16' \
+            -destination "platform=iOS Simulator,id=${{ steps.sim.outputs.udid }}" \
             -clonedSourcePackagesDirPath .spm \
             CODE_SIGNING_ALLOWED=NO \
             | xcbeautify
