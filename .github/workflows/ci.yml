@@ -16,7 +16,8 @@ jobs:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v4
-      # macOS runner には swiftlint がプリインストールされている。
+      - name: Install SwiftLint
+        run: brew install swiftlint
       # baseline は 0 violations なので --strict で新規 warning を即失敗にする。
       - name: Run SwiftLint
         run: swiftlint lint --strict --reporter github-actions-logging
