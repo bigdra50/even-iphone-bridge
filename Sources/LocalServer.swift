@@ -40,14 +40,6 @@ final class LocalServer {
             return .raw(200, "OK", cors, nil)
         }
 
-        // CORS preflight
-        server.OPTIONS["/api/action"] = { _ in
-            .raw(204, "No Content", cors.merging([
-                "Access-Control-Allow-Methods": "POST, OPTIONS",
-                "Access-Control-Allow-Headers": "Content-Type",
-            ]) { _, b in b }, nil)
-        }
-
         do {
             try server.start(port, forceIPv4: true)
         } catch {
