@@ -9,4 +9,10 @@ xcuserdata/
 .swiftpm/
 Package.resolved
 
+# CI で固定パスに clone する SPM 依存
+.spm/
+
+# CI で固定パスに clone する SPM 依存
+.spm/
+
 .DS_Store
