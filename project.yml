@@ -1,0 +1,33 @@
+name: EvenG2Bridge
+options:
+  bundleIdPrefix: com.bigdra50
+  deploymentTarget:
+    iOS: "16.0"
+packages:
+  Swifter:
+    url: https://github.com/httpswift/swifter.git
+    from: "1.5.0"
+targets:
+  EvenG2Bridge:
+    type: application
+    platform: iOS
+    sources: [Sources]
+    dependencies:
+      - package: Swifter
+        product: Swifter
+    info:
+      path: Sources/Info.plist
+      properties:
+        # Apple Music の now-playing 読取・制御に必要
+        NSAppleMusicUsageDescription: "再生中の曲をグラスに表示し、再生を制御します。"
+        # バックグラウンド (EvenApp 前面 / 端末ロック中) でも HTTP サーバーを生かす
+        UIBackgroundModes: [audio]
+        UILaunchScreen: {}
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.bigdra50.eveng2bridge
+        # Swift 6 strict concurrency を避けて 5 言語モードで素直にビルド
+        SWIFT_VERSION: "5.0"
+        TARGETED_DEVICE_FAMILY: "1,2"
+        MARKETING_VERSION: "0.1.0"
+        CURRENT_PROJECT_VERSION: "1"

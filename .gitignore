@@ -1,0 +1,12 @@
+# XcodeGen 生成物 (project.yml が真。.xcodeproj はコミットしない)
+*.xcodeproj/
+
+# Xcode / SPM
+.build/
+DerivedData/
+*.xcworkspace/xcuserdata/
+xcuserdata/
+.swiftpm/
+Package.resolved
+
+.DS_Store
