@@ -31,3 +31,35 @@ targets:
         TARGETED_DEVICE_FAMILY: "1,2"
         MARKETING_VERSION: "0.1.0"
         CURRENT_PROJECT_VERSION: "1"
+    # テストを EvenG2Bridge scheme の test アクションに紐付ける (xcodebuild test 用)
+    scheme:
+      testTargets:
+        - EvenG2BridgeTests
+  EvenG2BridgeTests:
+    type: bundle.unit-test
+    platform: iOS
+    sources: [Tests]
+    dependencies:
+      - target: EvenG2Bridge
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.bigdra50.eveng2bridge.tests
+        SWIFT_VERSION: "5.0"
+        # Info.plist を持たないので Xcode に自動生成させる
+        GENERATE_INFOPLIST_FILE: "YES"
+    # アプリ scheme の test アクションにユニットテストを紐付ける (xcodebuild test 用)
+    scheme:
+      testTargets:
+        - EvenG2BridgeTests
+  EvenG2BridgeTests:
+    type: bundle.unit-test
+    platform: iOS
+    sources: [Tests]
+    dependencies:
+      - target: EvenG2Bridge
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.bigdra50.eveng2bridge.tests
+        SWIFT_VERSION: "5.0"
+        # Info.plist を持たないので Xcode に自動生成させる
+        GENERATE_INFOPLIST_FILE: "YES"
