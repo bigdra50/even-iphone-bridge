@@ -43,7 +43,7 @@ open EvenG2Bridge.xcodeproj
 | メソッド | パス | 内容 |
 |---|---|---|
 | GET | `/api/status` | StatusDoc (groups/segments) |
-| GET | `/api/machine` | machineId/label |
+| GET | `/api/machine` | machineId/label/availableSources (bridge は検出ツール無しで `[]`) |
 | POST | `/api/action` | `{"id":"music.playpause"\|"music.next"\|"music.prev"}` |
 
 curl 確認 (アプリ起動中の iPhone と同一端末、または LAN):
