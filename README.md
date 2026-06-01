@@ -4,7 +4,7 @@ iPhone 上でローカル HTTP サーバーを建て、`eveng2-toolbar` (Even G2
 iPhone 側の情報 (バッテリー/音量/Apple Music) を `/api/status` で提供する PoC。
 
 EvenApp の WebView では取れないネイティブ情報を、自前アプリに委譲して segment 化する。
-toolbar 側は接続先 URL を `http://127.0.0.1:8723` にするだけで変更不要。
+toolbar 側はアプリ画面に表示される接続先 URL (LAN IP) を貼るだけ。
 
 ## 構成
 
@@ -34,9 +34,13 @@ open EvenG2Bridge.xcodeproj
 
 ## toolbar との接続
 
-1. このアプリを iPhone で起動したままにする
-2. EvenApp で toolbar を開き、Machine 設定の接続先に `http://127.0.0.1:8723` を入力
+1. このアプリを iPhone で起動したままにする (画面に接続先 URL が表示される)
+2. EvenApp で toolbar を開き、Machine 設定の接続先にアプリ表示の URL (`http://<iPhone の LAN IP>:8723`) を入力
 3. 接続テスト → iPhone の battery/volume/music が segment として出る
+
+> iPhone と toolbar を動かす端末は同一 Wi-Fi に置く。LAN IP は DHCP で変わりうるので、
+> アプリに表示された URL をその都度貼る。同じ iPhone 内 (EvenApp WebView) なら
+> `http://127.0.0.1:8723` でも届く。
 
 ## API
 

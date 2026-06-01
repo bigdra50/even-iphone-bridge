@@ -22,6 +22,8 @@ targets:
         NSAppleMusicUsageDescription: "再生中の曲をグラスに表示し、再生を制御します。"
         # 歩数 (CMPedometer) に必要。欠落すると実機で startUpdates が SIGABRT する
         NSMotionUsageDescription: "歩数をグラスに表示するため、モーションと運動データを使用します。"
+        # 同一 Wi-Fi の別端末 (Mac companion) から LAN IP で接続するのに必要 (iOS 14+)
+        NSLocalNetworkUsageDescription: "同一 Wi-Fi の端末から接続して情報を表示するため、ローカルネットワークを使用します。"
         # バックグラウンド (EvenApp 前面 / 端末ロック中) でも HTTP サーバーを生かす
         UIBackgroundModes: [audio]
         UILaunchScreen: {}

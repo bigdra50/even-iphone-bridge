@@ -18,6 +18,9 @@ final class Runtime: ObservableObject {
     let port: in_port_t = 8723
     let providers = ProviderRegistry.all()
     @Published var lastUpdate: Date?
+    // toolbar に貼る接続先。LAN IP を動的取得 (Wi-Fi 切替で変わるため refresh ごとに更新)。
+    @Published var connectHost = "127.0.0.1"
+    var connectURL: String { "http://\(connectHost):\(port)" }
 
     private let settings = ProviderSettings()
     private let store: StatusStore
@@ -49,13 +52,19 @@ final class Runtime: ObservableObject {
         keepAlive.start()
         store.refresh()
         server.start(port: port)
+        refreshConnectHost()
         timer = Timer.scheduledTimer(withTimeInterval: 10, repeats: true) { [weak self] _ in
             Task { @MainActor in
                 self?.store.refresh()
+                self?.refreshConnectHost()
                 self?.lastUpdate = Date()
             }
         }
         lastUpdate = Date()
+    }
+
+    private func refreshConnectHost() {
+        connectHost = NetworkInfo.lanIPv4() ?? "127.0.0.1"
     }
 }
 
@@ -69,9 +78,11 @@ struct ContentView: View {
                     VStack(alignment: .leading, spacing: 4) {
                         Text("toolbar の接続先に入力:")
                             .font(.footnote).foregroundStyle(.secondary)
-                        Text("http://127.0.0.1:\(String(runtime.port))")
+                        Text(runtime.connectURL)
                             .font(.system(.body, design: .monospaced))
                             .textSelection(.enabled)
+                        Text("同一 Wi-Fi の端末から接続。同じ iPhone 内なら http://127.0.0.1:\(String(runtime.port)) でも可。")
+                            .font(.caption2).foregroundStyle(.secondary)
                     }
                 } footer: {
                     if let t = runtime.lastUpdate {
