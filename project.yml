@@ -20,6 +20,8 @@ targets:
       properties:
         # Apple Music の now-playing 読取・制御に必要
         NSAppleMusicUsageDescription: "再生中の曲をグラスに表示し、再生を制御します。"
+        # 歩数 (CMPedometer) に必要。欠落すると実機で startUpdates が SIGABRT する
+        NSMotionUsageDescription: "歩数をグラスに表示するため、モーションと運動データを使用します。"
         # バックグラウンド (EvenApp 前面 / 端末ロック中) でも HTTP サーバーを生かす
         UIBackgroundModes: [audio]
         UILaunchScreen: {}
