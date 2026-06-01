@@ -1,7 +1,7 @@
 import AVFoundation
 
 struct AudioRouteProvider: SegmentProvider {
-    @MainActor func group() -> Group? {
+    @MainActor func segments() -> [Segment] {
         let out = AVAudioSession.sharedInstance().currentRoute.outputs.first
         let name: String
         switch out?.portType {
@@ -13,10 +13,6 @@ struct AudioRouteProvider: SegmentProvider {
         case .some: name = out?.portName ?? "Out"
         case .none: name = "-"
         }
-        return Group(
-            id: "audio",
-            label: "Audio",
-            segments: [Segment(id: "route", label: "Out", value: name, defaultEnabled: true)]
-        )
+        return [Segment(id: "audio", label: "Out", value: name, defaultEnabled: true)]
     }
 }

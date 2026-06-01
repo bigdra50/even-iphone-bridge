@@ -2,7 +2,7 @@ import Foundation
 import Network
 
 // NWPathMonitor は非同期コールバックなので、起動時から監視して最新値をキャッシュし、
-// provider.group() (同期) はキャッシュを読む。
+// provider.segments() (同期) はキャッシュを読む。
 final class NetworkMonitor {
     static let shared = NetworkMonitor()
     private let monitor = NWPathMonitor()
@@ -38,11 +38,7 @@ final class NetworkMonitor {
 }
 
 struct NetworkProvider: SegmentProvider {
-    @MainActor func group() -> Group? {
-        Group(
-            id: "network",
-            label: "Network",
-            segments: [Segment(id: "type", label: "Net", value: NetworkMonitor.shared.status, defaultEnabled: true)]
-        )
+    @MainActor func segments() -> [Segment] {
+        [Segment(id: "network", label: "Net", value: NetworkMonitor.shared.status, defaultEnabled: true)]
     }
 }

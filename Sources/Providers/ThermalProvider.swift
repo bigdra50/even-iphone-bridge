@@ -1,7 +1,7 @@
 import Foundation
 
 struct ThermalProvider: SegmentProvider {
-    @MainActor func group() -> Group? {
+    @MainActor func segments() -> [Segment] {
         let state: String
         switch ProcessInfo.processInfo.thermalState {
         case .nominal: state = "nominal"
@@ -10,10 +10,6 @@ struct ThermalProvider: SegmentProvider {
         case .critical: state = "critical"
         @unknown default: state = "?"
         }
-        return Group(
-            id: "thermal",
-            label: "Thermal",
-            segments: [Segment(id: "state", label: "Thermal", value: state, defaultEnabled: true)]
-        )
+        return [Segment(id: "thermal", label: "Thermal", value: state, defaultEnabled: true)]
     }
 }

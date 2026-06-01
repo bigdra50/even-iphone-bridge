@@ -14,10 +14,13 @@ final class StatusStore {
     }
 
     @MainActor func refresh() {
-        var groups: [Group] = []
+        // 有効な provider の segment を 1 つの "iphone" グループに集約する。
+        // (iPhone bridge = 1 つの論理ソース。toolbar 側で 1 item として並ぶ)
+        var segments: [Segment] = []
         for info in registry where settings.isEnabled(info.id) {
-            if let g = info.provider.group() { groups.append(g) }
+            segments.append(contentsOf: info.provider.segments())
         }
+        let groups = segments.isEmpty ? [] : [Group(id: "iphone", label: "iPhone", segments: segments)]
         let doc = StatusDoc(version: 1, ts: Int(Date().timeIntervalSince1970 * 1000), groups: groups)
         let encoded = (try? JSONEncoder().encode(doc)) ?? Data("{}".utf8)
         lock.lock()

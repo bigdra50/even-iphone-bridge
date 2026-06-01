@@ -1,12 +1,8 @@
 import UIKit
 
 struct BrightnessProvider: SegmentProvider {
-    @MainActor func group() -> Group? {
+    @MainActor func segments() -> [Segment] {
         let pct = Int((UIScreen.main.brightness * 100).rounded())
-        return Group(
-            id: "brightness",
-            label: "Brightness",
-            segments: [Segment(id: "level", label: "Bright", value: "\(pct)%", percent: pct, defaultEnabled: true)]
-        )
+        return [Segment(id: "brightness", label: "Bright", value: "\(pct)%", percent: pct, defaultEnabled: true)]
     }
 }

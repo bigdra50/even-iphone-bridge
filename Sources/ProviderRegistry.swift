@@ -1,7 +1,8 @@
 import Foundation
 
 // 利用可能な provider の一覧 (設定 UI と StatusStore が参照)。新規はここに足すだけ。
-// id は生成する Group.id と一致させる (toolbar の config キーと揃う)。
+// id は設定 UI の有効化キー (UserDefaults 永続化)。出力は全 provider の segment を
+// 単一 "iphone" グループにまとめる (StatusStore)。segment id は全 provider 間で一意にする。
 struct ProviderInfo: Identifiable {
     let id: String
     let label: String // 設定 UI の表示名

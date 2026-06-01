@@ -1,8 +1,8 @@
 import CoreMotion
 import Foundation
 
-// CMPedometer は非同期更新なので、startUpdates で最新歩数をキャッシュし、group() はそれを返す。
-// startUpdates の初回呼び出しでモーション許可ダイアログが出る。
+// CMPedometer は非同期更新なので、startUpdates で最新歩数をキャッシュし、segments() はそれを返す。
+// startUpdates の初回呼び出しでモーション許可ダイアログが出る (要 NSMotionUsageDescription)。
 final class StepsProvider: SegmentProvider {
     private let pedometer = CMPedometer()
     private let lock = NSLock()
@@ -20,15 +20,11 @@ final class StepsProvider: SegmentProvider {
         }
     }
 
-    @MainActor func group() -> Group? {
+    @MainActor func segments() -> [Segment] {
         startIfNeeded()
         lock.lock()
         let s = steps
         lock.unlock()
-        return Group(
-            id: "steps",
-            label: "Steps",
-            segments: [Segment(id: "today", label: "Steps", value: s.map(String.init) ?? "-", defaultEnabled: true)]
-        )
+        return [Segment(id: "steps", label: "Steps", value: s.map(String.init) ?? "-", defaultEnabled: true)]
     }
 }
