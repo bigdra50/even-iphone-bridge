@@ -1,5 +1,6 @@
-# 版で結果が変わる道具を固定する。
-# swiftlint は版が上がるとルールが増え、xcodegen は版で生成される .xcodeproj が変わる。
+# swiftlint は新しいバージョンでルールが増え、xcodegen はバージョンごとに生成する .xcodeproj が変わる。
+# 手元と CI で結果をそろえるため、両方のバージョンを固定する。CI も jdx/mise-action でこのファイルから入れる。
+# 取得するファイルの URL と sha256 は mise.lock にある。バージョンを変えたら `mise lock` で作り直す。
 [tools]
 swiftlint = "0.63.2"
 xcodegen = "2.45.3"
