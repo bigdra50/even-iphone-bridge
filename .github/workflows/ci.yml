@@ -16,8 +16,11 @@ jobs:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v6
+      # バージョンは mise.toml、取得するファイルの sha256 は mise.lock で手元と同じものに固定する
       - name: Install SwiftLint
-        run: brew install swiftlint
+        uses: jdx/mise-action@v5
+        with:
+          install_args: swiftlint
       # baseline は 0 violations なので --strict で新規 warning を即失敗にする。
       - name: Run SwiftLint
         run: swiftlint lint --strict --reporter github-actions-logging
@@ -36,7 +39,9 @@ jobs:
           restore-keys: ${{ runner.os }}-spm-
 
       - name: Install XcodeGen
-        run: brew install xcodegen
+        uses: jdx/mise-action@v5
+        with:
+          install_args: xcodegen
 
       - name: Generate Xcode project
         run: xcodegen generate
