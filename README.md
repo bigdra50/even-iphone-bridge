@@ -24,6 +24,7 @@ KeepAlive.swift    無音ループ再生で background suspend を回避 (mixWit
 ## ビルド
 
 ```bash
+mise trust && mise install # mise.toml の swiftlint と xcodegen を入れる（初回だけ）
 xcodegen generate          # project.yml → EvenG2Bridge.xcodeproj
 open EvenG2Bridge.xcodeproj
 # Signing チームを設定し、実機 (iPhone) にビルド
