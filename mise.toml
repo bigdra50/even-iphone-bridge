@@ -1,0 +1,5 @@
+# 版で結果が変わる道具を固定する。
+# swiftlint は版が上がるとルールが増え、xcodegen は版で生成される .xcodeproj が変わる。
+[tools]
+swiftlint = "0.63.2"
+xcodegen = "2.45.3"
